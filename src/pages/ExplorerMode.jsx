@@ -1,15 +1,14 @@
 import React from 'react';
-import Chatbot from '../components/Chatbot';
 import sites from '../data/sites.json';
 import HeroCarousel from '../components/HeroCarousel';
-import { ArrowRight, Bot, Star } from 'lucide-react';
+import Chatbot from '../components/Chatbot';
+import { ArrowRight, Star } from 'lucide-react';
 
 export default function ExplorerMode() {
-  // Filter data into two lists
   const places = sites.filter(site => site.category === 'place');
   const activities = sites.filter(site => site.category === 'activity');
 
-  // Reusable Component for a Horizontal Slider
+  // Reusable Slider
   const SectionSlider = ({ title, items, isActivity = false }) => (
     <div className="mt-8 pl-6 relative z-10">
       <div className="flex justify-between items-end pr-6 mb-4">
@@ -17,15 +16,14 @@ export default function ExplorerMode() {
         <span className="text-brand-accent text-xs font-bold uppercase cursor-pointer hover:underline">View All</span>
       </div>
       
-      <div className="flex overflow-x-auto gap-5 pb-8 pr-6 snap-x hide-scrollbar">
+      {/* ADDED: Inline styles to hide scrollbar */}
+      <div className="flex overflow-x-auto gap-5 pb-8 pr-6 snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {items.map((item) => (
           <div 
             key={item.id} 
-            // INCREASED HEIGHT: min-w is now 240px, and image height is h-40
             className="min-w-[240px] bg-brand-card rounded-2xl p-3 shadow-lg flex-shrink-0 snap-center border border-brand-dark/5 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between"
           >
             <div>
-              {/* Image Section (Taller now: h-40) */}
               <div className="h-40 w-full rounded-xl overflow-hidden mb-3 relative">
                 <img src={item.image} className="w-full h-full object-cover" alt="" />
                 <div className="absolute top-2 right-2 bg-brand-dark/70 text-brand-bg text-[10px] px-2 py-1 rounded-full backdrop-blur-sm flex items-center gap-1">
@@ -33,13 +31,10 @@ export default function ExplorerMode() {
                   {item.distance}
                 </div>
               </div>
-
-              {/* Card Details */}
               <h4 className="font-bold text-brand-dark text-lg leading-tight font-serif">{item.name}</h4>
               <p className="text-xs text-brand-dark/60 mt-1 line-clamp-2">{item.description}</p>
             </div>
             
-            {/* Action Button */}
             <div className="mt-4">
                 <button className={`w-full py-2 rounded-lg text-sm font-bold shadow-md active:scale-95 transition flex justify-center items-center gap-2 ${isActivity ? 'bg-brand-dark text-white' : 'bg-brand-accent text-white hover:bg-[#ff8547]'}`}>
                   {isActivity ? 'Book Now' : 'Start Quest'} <ArrowRight size={14} />
@@ -53,21 +48,21 @@ export default function ExplorerMode() {
 
   return (
     <div className="pb-24 bg-brand-bg">
-      
-      {/* 1. HERO SECTION */}
+        {/* Style tag to hide scrollbars on Chrome/Safari */}
+        <style>{`
+            ::-webkit-scrollbar {
+                display: none;
+            }
+        `}</style>
+
       <div className="relative z-0">
         <HeroCarousel sites={places} />
       </div>
 
-      {/* 2. SLIDER 1: PLACES NEARBY */}
       <SectionSlider title="Places near by" items={places} />
-
-      {/* 3. SLIDER 2: ACTIVITIES NEARBY (New!) */}
       <SectionSlider title="Activities nearby" items={activities} isActivity={true} />
-
-      {/* The new Pill Button */}
+      
       <Chatbot />
-
     </div>
   );
 }
