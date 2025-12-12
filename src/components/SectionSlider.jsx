@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, Heart } from 'lucide-react';
 
 export default function SectionSlider({ title, items, isActivity = false }) {
     return (
@@ -14,15 +14,20 @@ export default function SectionSlider({ title, items, isActivity = false }) {
                     <div
                         key={item.id}
                         // INCREASED HEIGHT: min-w is now 240px, and image height is h-40
-                        className="min-w-[240px] bg-brand-card rounded-2xl p-3 shadow-lg flex-shrink-0 snap-center border border-brand-dark/5 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between"
+                        className="min-w-[240px] bg-[#FAF3E1] rounded-2xl p-3 shadow-lg flex-shrink-0 snap-center border border-brand-dark/5 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between"
                     >
                         <div>
                             {/* Image Section (Taller now: h-40) */}
                             <div className="h-40 w-full rounded-xl overflow-hidden mb-3 relative">
                                 <img src={item.image} className="w-full h-full object-cover" alt="" />
-                                <div className="absolute top-2 right-2 bg-brand-dark/70 text-brand-bg text-[10px] px-2 py-1 rounded-full backdrop-blur-sm flex items-center gap-1">
-                                    {isActivity && <Star size={8} className="text-yellow-400 fill-yellow-400" />}
-                                    {item.distance}
+                                <div className="absolute top-2 right-2 flex gap-2">
+                                    <div className="bg-brand-dark/70 text-brand-bg text-[10px] px-2 py-1 rounded-full backdrop-blur-sm flex items-center gap-1">
+                                        {isActivity && <Star size={8} className="text-yellow-400 fill-yellow-400" />}
+                                        {item.distance}
+                                    </div>
+                                    <button className="bg-white/90 p-1 rounded-full text-brand-accent shadow-sm hover:scale-110 active:scale-95 transition">
+                                        <Heart size={14} />
+                                    </button>
                                 </div>
                             </div>
 
@@ -34,7 +39,7 @@ export default function SectionSlider({ title, items, isActivity = false }) {
                         {/* Action Button */}
                         <div className="mt-4">
                             <button className={`w-full py-2 rounded-lg text-sm font-bold shadow-md active:scale-95 transition flex justify-center items-center gap-2 ${isActivity ? 'bg-brand-dark text-white' : 'bg-brand-accent text-white hover:bg-[#ff8547]'}`}>
-                                {isActivity ? 'Book Now' : 'Start Quest'} <ArrowRight size={14} />
+                                {isActivity ? 'Book Now' : 'More Details'} <ArrowRight size={14} />
                             </button>
                         </div>
                     </div>

@@ -1,0 +1,100 @@
+﻿
+> whackiest@0.0.0 dev
+> vite
+
+npm : [33mYou are 
+using Node.js 
+20.10.0. Vite 
+requires Node.js 
+version 20.19+ or 
+22.12+. Please 
+upgrade your Node.js 
+version.[39m
+At line:1 char:10
++ node -v; npm run 
+dev > error.log 2>&1
++          ~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: ([33mYo   
+ u are us...s ver    
+sion.[39m:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+[31merror when 
+starting dev server:
+TypeError: 
+crypto.hash is not a 
+function
+    at getHash (file:
+///C:/Users/ankit/Dow
+nloads/Whackiest/wHAC
+KIEST-1/node_modules/
+vite/dist/node/chunks
+/config.js:2444:19)
+    at 
+getLockfileHash (file
+:///C:/Users/ankit/Do
+wnloads/Whackiest/wHA
+CKIEST-1/node_modules
+/vite/dist/node/chunk
+s/config.js:32382:9)
+    at getDepHash (fi
+le:///C:/Users/ankit/
+Downloads/Whackiest/w
+HACKIEST-1/node_modul
+es/vite/dist/node/chu
+nks/config.js:32385:2
+3)
+    at initDepsOptimi
+zerMetadata (file:///
+C:/Users/ankit/Downlo
+ads/Whackiest/wHACKIE
+ST-1/node_modules/vit
+e/dist/node/chunks/co
+nfig.js:31844:53)
+    at 
+createDepsOptimizer (
+file:///C:/Users/anki
+t/Downloads/Whackiest
+/wHACKIEST-1/node_mod
+ules/vite/dist/node/c
+hunks/config.js:34032
+:17)
+    at new 
+DevEnvironment (file:
+///C:/Users/ankit/Dow
+nloads/Whackiest/wHAC
+KIEST-1/node_modules/
+vite/dist/node/chunks
+/config.js:34806:109)
+    at Object.default
+CreateClientDevEnviro
+nment [as 
+createEnvironment] (f
+ile:///C:/Users/ankit
+/Downloads/Whackiest/
+wHACKIEST-1/node_modu
+les/vite/dist/node/ch
+unks/config.js:35218:
+9)
+    at file:///C:/Use
+rs/ankit/Downloads/Wh
+ackiest/wHACKIEST-1/n
+ode_modules/vite/dist
+/node/chunks/config.j
+s:25389:52
+    at Array.map 
+(<anonymous>)
+    at _createServer 
+(file:///C:/Users/ank
+it/Downloads/Whackies
+t/wHACKIEST-1/node_mo
+dules/vite/dist/node/
+chunks/config.js:2538
+8:58)[39m

@@ -25,6 +25,16 @@ export default function Header() {
                 {/* Wanderer Button (Center of Pill) */}
                 <Link to="/wanderer" className={navItemClass('/wanderer')}>Wanderer</Link>
                 <Link to="/profile" className={navItemClass('/profile')}>Profile</Link>
+                <div className="w-px h-4 bg-gray-300 mx-1"></div>
+                <button
+                    onClick={() => {
+                        localStorage.removeItem('isAuthenticated');
+                        window.location.href = '/auth';
+                    }}
+                    className="p-2 rounded-full text-red-400 hover:bg-red-50 hover:text-red-500 transition-colors"
+                >
+                    <LogOut size={16} />
+                </button>
             </nav>
         </div>
     );

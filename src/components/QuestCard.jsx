@@ -58,7 +58,7 @@ export default function QuestCard({ quest, isCompleted, onClaim }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.02 }}
-            className={`relative w-80 h-[28rem] rounded-3xl p-6 border-2 shadow-xl cursor-pointer overflow-hidden backdrop-blur-sm ${rarityColors[quest.rarity] || rarityColors.common}`}
+            className={`relative w-80 min-h-[30rem] h-full flex flex-col justify-between rounded-3xl p-6 border-2 shadow-xl cursor-pointer overflow-hidden backdrop-blur-sm ${isCompleted ? 'grayscale bg-gray-100 border-gray-300' : (rarityColors[quest.rarity] || rarityColors.common)}`}
         >
             {/* Background Decorative Layer */}
             <div
@@ -128,7 +128,7 @@ export default function QuestCard({ quest, isCompleted, onClaim }) {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => !isCompleted && onClaim(quest.id)}
                     disabled={isCompleted}
-                    style={{ backgroundColor: isCompleted ? '#22c55e' : rarityAccents[quest.rarity] }}
+                    style={{ backgroundColor: isCompleted ? '#9ca3af' : rarityAccents[quest.rarity] }}
                     className={`w-full py-4 rounded-xl font-bold text-white shadow-lg border-b-4 border-black/20 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2`}
                 >
                     {isCompleted ? 'Completed' : 'Start Quest'}
