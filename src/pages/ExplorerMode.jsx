@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import sites from '../data/sites.json';
 import HeroCarousel from '../components/HeroCarousel';
 import SectionSlider from '../components/SectionSlider';
@@ -6,13 +6,11 @@ import QuestCard from '../components/QuestCard';
 import { useGamification } from '../context/GamificationContext';
 import { Bot, Map, Compass, Tent } from 'lucide-react';
 import Chatbot from '../components/Chatbot';
-import PlaceDetailModal from '../components/PlaceDetailModal';
 import { ArrowRight, Star } from 'lucide-react';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { calculateDistance } from '../utils/distance';
 
 export default function ExplorerMode() {
-  const [selectedPlace, setSelectedPlace] = useState(null);
   const location = useGeolocation();
   const chatbotRef = useRef(null);
 
@@ -47,13 +45,6 @@ export default function ExplorerMode() {
     return aCompleted ? 1 : -1;
   });
 
-  const handlePlanItinerary = (placeName) => {
-    setSelectedPlace(null);
-    if (chatbotRef.current) {
-      chatbotRef.current.openWithQuery(`Plan a trip to ${placeName}`);
-    }
-  };
-
   return (
     <div className="pb-24 bg-white">
       {/* Style tag to hide scrollbars on Chrome/Safari */}
@@ -71,7 +62,6 @@ export default function ExplorerMode() {
       <SectionSlider
         title="Places to visit"
         items={places}
-        onSelect={(place) => setSelectedPlace(place)}
         icon={Compass}
         theme="blue"
       />
@@ -110,18 +100,11 @@ export default function ExplorerMode() {
         title="Activities for you"
         items={activities}
         isActivity={true}
-        onSelect={(place) => setSelectedPlace(place)}
         icon={Tent}
         theme="green"
       />
 
       <Chatbot ref={chatbotRef} />
-
-      <PlaceDetailModal
-        place={selectedPlace}
-        onClose={() => setSelectedPlace(null)}
-        onPlanItinerary={handlePlanItinerary}
-      />
     </div>
   );
 }
