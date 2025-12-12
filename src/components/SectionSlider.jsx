@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, Star, Heart } from 'lucide-react';
 
-export default function SectionSlider({ title, items, isActivity = false }) {
+export default function SectionSlider({ title, items, isActivity = false, onSelect }) {
     return (
         <div className="mt-8 pl-6 relative z-10">
             <div className="flex justify-between items-end pr-6 mb-4">
@@ -38,7 +38,10 @@ export default function SectionSlider({ title, items, isActivity = false }) {
 
                         {/* Action Button */}
                         <div className="mt-4">
-                            <button className={`w-full py-2 rounded-lg text-sm font-bold shadow-md active:scale-95 transition flex justify-center items-center gap-2 ${isActivity ? 'bg-brand-dark text-white' : 'bg-brand-accent text-white hover:bg-[#ff8547]'}`}>
+                            <button
+                                onClick={() => onSelect && onSelect(item)}
+                                className={`w-full py-2 rounded-lg text-sm font-bold shadow-md active:scale-95 transition flex justify-center items-center gap-2 ${isActivity ? 'bg-brand-dark text-white' : 'bg-brand-accent text-white hover:bg-[#ff8547]'}`}
+                            >
                                 {isActivity ? 'Book Now' : 'More Details'} <ArrowRight size={14} />
                             </button>
                         </div>

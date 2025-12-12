@@ -66,7 +66,7 @@ export default function ExplorerMode() {
       </div>
 
       <SectionSlider title="Places to visit" items={places} />
-      <SectionSlider title="Places to visit" items={places} />
+
 
 
       {/* Active Quests Section - Horizontal Scroll */}
