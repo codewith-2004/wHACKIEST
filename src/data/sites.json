@@ -6,7 +6,9 @@
     "description": "The main center of pilgrimage at Hampi. Dedicated to Lord Shiva.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Virupaksha_Temple_in_Hampi.jpg/640px-Virupaksha_Temple_in_Hampi.jpg",
     "distance": "0.5 km",
-    "xp": 100
+    "xp": 100,
+    "lat": 15.3350,
+    "lng": 76.4600
   },
   {
     "id": 2,
@@ -15,7 +17,9 @@
     "description": "Famous for its Stone Chariot and musical pillars. An architectural masterpiece.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Stone_Chariot_Hampi.jpg/640px-Stone_Chariot_Hampi.jpg",
     "distance": "2.1 km",
-    "xp": 500
+    "xp": 500,
+    "lat": 15.3430,
+    "lng": 76.4748
   },
   {
     "id": 3,
@@ -24,7 +28,9 @@
     "description": "A grand structure used to house the royal elephants.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Elephant_Stables_Hampi.jpg/640px-Elephant_Stables_Hampi.jpg",
     "distance": "3.5 km",
-    "xp": 300
+    "xp": 300,
+    "lat": 15.3214,
+    "lng": 76.4723
   },
   {
     "id": 4,
@@ -33,7 +39,9 @@
     "description": "A pleasant blend of Hindu and Islamic architectural styles.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Lotus_Mahal_Hampi.jpg/640px-Lotus_Mahal_Hampi.jpg",
     "distance": "3.8 km",
-    "xp": 350
+    "xp": 350,
+    "lat": 15.3189,
+    "lng": 76.4704
   },
   {
     "id": 5,
@@ -42,7 +50,9 @@
     "description": "A massive bath complex used by the royals of Vijayanagara.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Queen%27s_Bath_Hampi.jpg/640px-Queen%27s_Bath_Hampi.jpg",
     "distance": "4.0 km",
-    "xp": 200
+    "xp": 200,
+    "lat": 15.3134,
+    "lng": 76.4721
   },
   {
     "id": 6,
@@ -51,7 +61,9 @@
     "description": "Experience a traditional round boat ride on the Tungabhadra river.",
     "image": "https://thumbs.dreamstime.com/b/coracle-boats-tungabhadra-river-hampi-karnataka-india-february-traditional-bound-bamboo-plastic-bitumen-31586520.jpg",
     "distance": "1.0 km",
-    "xp": 150
+    "xp": 150,
+    "lat": 15.3370,
+    "lng": 76.4620
   },
   {
     "id": 7,
@@ -60,7 +72,9 @@
     "description": "Climb the massive boulders of Hampi Island for a perfect view.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Matanga_Hill_Hampi.jpg/640px-Matanga_Hill_Hampi.jpg",
     "distance": "1.5 km",
-    "xp": 400
+    "xp": 400,
+    "lat": 15.3330,
+    "lng": 76.4680
   },
   {
     "id": 8,
@@ -69,7 +83,9 @@
     "description": "Rent a cycle and tour the ruins at your own pace.",
     "image": "https://live.staticflickr.com/7418/16436979601_875417855b_b.jpg",
     "distance": "0.2 km",
-    "xp": 100
+    "xp": 100,
+    "lat": 15.3340,
+    "lng": 76.4610
   },
   {
     "id": 9,
@@ -78,7 +94,9 @@
     "description": "Adrenaline rush at Sanapur Lake (Check water levels first!).",
     "image": "https://img.traveltriangle.com/blog/wp-content/uploads/2019/09/Cliff-Jumping1.jpg",
     "distance": "5.5 km",
-    "xp": 600
+    "xp": 600,
+    "lat": 15.3550,
+    "lng": 76.5000
   },
   {
     "id": 10,
@@ -87,7 +105,9 @@
     "description": "Explore the vibrant Hampi Bazaar street in the evening.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Hampi_Bazaar.jpg/640px-Hampi_Bazaar.jpg",
     "distance": "0.5 km",
-    "xp": 50
+    "xp": 50,
+    "lat": 15.3360,
+    "lng": 76.4595
   },
   {
     "id": 11,
@@ -96,6 +116,8 @@
     "description": "Find hidden shrines inside the Sugriva's Cave.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/90/Sugriva%27s_Cave.jpg",
     "distance": "1.8 km",
-    "xp": 250
+    "xp": 250,
+    "lat": 15.3385,
+    "lng": 76.4635
   }
 ]

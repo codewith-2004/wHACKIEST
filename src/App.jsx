@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ExplorerMode from './pages/ExplorerMode';
+main
+import FogMap from './components/FogMap';
+import Header from './components/Header';
+import Profile from './pages/Profile';
+
 import { Settings, LogOut } from 'lucide-react';
 
 // Placeholders
@@ -61,15 +66,16 @@ function TopHeader() {
     </>
   );
 }
+main
 
 export default function App() {
   return (
     <Router>
       <div className="min-h-screen bg-brand-bg text-brand-dark font-sans selection:bg-brand-accent selection:text-white">
-        <TopHeader />
+        <Header />
         <Routes>
           <Route path="/" element={<ExplorerMode />} />
-          <Route path="/wanderer" element={<Wanderer />} />
+          <Route path="/wanderer" element={<FogMap />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
