@@ -10,11 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-main
-    "@turf/turf": "^7.3.1",
-
     "@google/generative-ai": "^0.24.1",
-main
+    "@turf/turf": "^7.3.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.561.0",
@@ -23,6 +20,7 @@ main
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-map-gl": "^8.1.0",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.10.1",
     "tailwind-merge": "^3.4.0"
   },

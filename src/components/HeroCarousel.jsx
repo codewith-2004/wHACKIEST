@@ -14,37 +14,42 @@ export default function HeroCarousel({ sites }) {
 
   return (
     // CHANGE 1: Changed h-64 to h-[60vh] to make it BIG like your sketch
-    <div className="relative w-full h-[60vh] overflow-hidden rounded-b-[3rem] shadow-2xl">
-      <AnimatePresence mode='wait'>
+    <div className="relative w-full h-[60vh] overflow-hidden">
+      <AnimatePresence>
         <motion.img
           key={index}
           src={sites[index].image}
           alt={sites[index].name}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
           className="absolute inset-0 w-full h-full object-cover"
         />
       </AnimatePresence>
-      
-      {/* CHANGE 2: Darker gradient from Top so white text pops */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/60 flex items-end p-8">
-        <div className="mb-8">
-            <span className="text-brand-accent text-xs font-bold tracking-widest uppercase mb-2 block bg-white/10 w-fit px-2 py-1 rounded backdrop-blur-md">
-              Featured Site
-            </span>
-            <h2 className="text-white text-4xl font-serif font-bold leading-tight">{sites[index].name}</h2>
-            <p className="text-white/80 text-sm mt-2 max-w-xs line-clamp-2">{sites[index].description}</p>
+
+      {/* Top Gradient for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent pointer-events-none" />
+
+      {/* Fade to Canvas (White) */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+
+      <div className="absolute inset-0 flex items-end p-8 pb-16">
+        <div className="mb-4 relative z-10">
+          <span className="text-brand-accent text-xs font-bold tracking-widest uppercase mb-2 block bg-black/40 w-fit px-2 py-1 rounded backdrop-blur-md">
+            Featured Site
+          </span>
+          <h2 className="text-white text-4xl font-serif font-bold leading-tight drop-shadow-lg">{sites[index].name}</h2>
+          <p className="text-white/90 text-sm mt-2 max-w-xs line-clamp-2 drop-shadow-md font-medium">{sites[index].description}</p>
         </div>
       </div>
-      
+
       {/* Dots */}
       <div className="absolute bottom-6 right-6 flex space-x-2">
         {sites.map((_, i) => (
-          <div 
-            key={i} 
-            className={`transition-all duration-300 rounded-full shadow-lg ${i === index ? 'bg-brand-accent w-8 h-2' : 'bg-white/50 w-2 h-2'}`} 
+          <div
+            key={i}
+            className={`transition-all duration-300 rounded-full shadow-lg ${i === index ? 'bg-brand-accent w-8 h-2' : 'bg-white/50 w-2 h-2'}`}
           />
         ))}
       </div>
