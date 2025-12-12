@@ -1,12 +1,30 @@
 import React from 'react';
 import { ArrowRight, Star, Heart } from 'lucide-react';
 
-export default function SectionSlider({ title, items, isActivity = false }) {
+export default function SectionSlider({ title, items, isActivity = false, onSelect, icon: Icon, theme = 'orange' }) {
+
+    const themes = {
+        orange: { bg: 'bg-orange-100', text: 'text-orange-600', border: 'border-orange-200' },
+        blue: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-200' },
+        green: { bg: 'bg-emerald-100', text: 'text-emerald-600', border: 'border-emerald-200' },
+        purple: { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-200' },
+        rose: { bg: 'bg-rose-100', text: 'text-rose-600', border: 'border-rose-200' },
+    };
+
+    const currentTheme = themes[theme] || themes.orange;
+
     return (
         <div className="mt-8 pl-6 relative z-10">
-            <div className="flex justify-between items-end pr-6 mb-4">
-                <h3 className="text-brand-dark text-xl font-bold font-serif">{title}</h3>
-                <span className="text-brand-accent text-xs font-bold uppercase cursor-pointer hover:underline">View All</span>
+            <div className="flex justify-between items-center pr-6 mb-4">
+                <div className="flex items-center gap-2">
+                    {Icon && (
+                        <div className={`p-2 rounded-lg ${currentTheme.bg} ${currentTheme.text}`}>
+                            <Icon size={20} />
+                        </div>
+                    )}
+                    <h3 className="text-brand-dark text-xl font-black tracking-tight">{title}</h3>
+                </div>
+                <span className={`text-xs font-bold uppercase cursor-pointer hover:underline ${currentTheme.text}`}>View All</span>
             </div>
 
             <div className="flex overflow-x-auto gap-5 pb-8 pr-6 snap-x hide-scrollbar">
@@ -38,7 +56,10 @@ export default function SectionSlider({ title, items, isActivity = false }) {
 
                         {/* Action Button */}
                         <div className="mt-4">
-                            <button className={`w-full py-2 rounded-lg text-sm font-bold shadow-md active:scale-95 transition flex justify-center items-center gap-2 ${isActivity ? 'bg-brand-dark text-white' : 'bg-brand-accent text-white hover:bg-[#ff8547]'}`}>
+                            <button
+                                onClick={() => onSelect && onSelect(item)}
+                                className={`w-full py-2 rounded-lg text-sm font-bold shadow-md active:scale-95 transition flex justify-center items-center gap-2 ${isActivity ? 'bg-brand-dark text-white' : 'bg-brand-accent text-white hover:bg-[#ff8547]'}`}
+                            >
                                 {isActivity ? 'Book Now' : 'More Details'} <ArrowRight size={14} />
                             </button>
                         </div>

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import questsData from '../data/quests.json';
-// import { GoogleGenerativeAI } from "@google/generative-ai";
+import { supabase } from '../lib/supabaseClient';
 
 const GamificationContext = createContext();
 
@@ -13,20 +12,17 @@ export function GamificationProvider({ children }) {
     // Stamps: { common: 0, rare: 0, epic: 0, mythic: 0 }
     const [stamps, setStamps] = useState(() => JSON.parse(localStorage.getItem('hampi_stamps')) || { common: 0, rare: 0, epic: 0, mythic: 0 });
 
-    // Dynamic quests (AI Generated)
-    const [dynamicQuests, setDynamicQuests] = useState(() => JSON.parse(localStorage.getItem('hampi_dynamic_quests')) || []);
-
-    // Combine static and dynamic quests
-    const allQuests = [...questsData, ...dynamicQuests];
+    const [allQuests, setAllQuests] = useState([]);
 
     useEffect(() => {
-        localStorage.setItem('hampi_xp', xp);
-        localStorage.setItem('hampi_level', level);
-        localStorage.setItem('hampi_completed_quests', JSON.stringify(completedQuests));
-        localStorage.setItem('hampi_badges', JSON.stringify(badges));
-        localStorage.setItem('hampi_stamps', JSON.stringify(stamps));
-        localStorage.setItem('hampi_dynamic_quests', JSON.stringify(dynamicQuests));
-    }, [xp, level, completedQuests, badges, stamps, dynamicQuests]);
+        const fetchQuests = async () => {
+            if (supabase.supabaseUrl) {
+                const { data, error } = await supabase.from('quests').select('*');
+                if (!error && data) setAllQuests(data);
+            }
+        };
+        fetchQuests();
+    }, []);
 
     // Check Level Up
     useEffect(() => {
@@ -48,7 +44,7 @@ export function GamificationProvider({ children }) {
     const completeQuest = (questId) => {
         if (completedQuests.includes(questId)) return;
 
-        const quest = questsData.find(q => q.id === questId);
+        const quest = allQuests.find(q => q.id === questId);
         if (!quest) return;
 
         setCompletedQuests(prev => {

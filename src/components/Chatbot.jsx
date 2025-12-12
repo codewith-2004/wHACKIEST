@@ -7,13 +7,20 @@ import ReactMarkdown from 'react-markdown';
 // ✅ API Key from Environment Variables
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-export default function Chatbot() {
+const Chatbot = React.forwardRef((props, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [showWelcome, setShowWelcome] = useState(true);
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
+
+    React.useImperativeHandle(ref, () => ({
+        openWithQuery: (query) => {
+            setIsOpen(true);
+            handleSend(query);
+        }
+    }));
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -46,7 +53,9 @@ export default function Chatbot() {
         try {
             if (!API_KEY) throw new Error("MISSING_KEY");
 
-            console.log("Talking to Gemini...");
+            console.log("Talking to Gemini using model: gemini-2.5-flash");
+            console.log("API Key Status:", API_KEY ? "Present" : "Missing", API_KEY ? `(${API_KEY.substring(0, 5)}...)` : "");
+
             const genAI = new GoogleGenerativeAI(API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
@@ -67,14 +76,21 @@ export default function Chatbot() {
 
             setMessages(prev => [...prev, { role: 'model', text: text }]);
         } catch (error) {
-            console.error("Gemini Error:", error);
-            let errorMessage = "Connection failed. Please try again.";
+            console.error("Gemini Deep Debug Error:", error);
+            console.error("Error Name:", error.name);
+            console.error("Error Message:", error.message);
+            if (error.response) {
+                console.error("Error Response:", error.response);
+            }
 
-            // Detailed error messages for debugging
-            if (error.message.includes("400")) {
-                errorMessage = "⚠️ API Key Error: Google blocked this request. (Check Console)";
-            } else if (error.message.includes("Failed to fetch")) {
-                errorMessage = "⚠️ Network Error: Check your internet connection.";
+            let errorMessage = "Connection failed. (Check Console for details)";
+
+            if (error.message.includes("404")) {
+                errorMessage = "⚠️ Model Not Found: 'gemini-2.5-flash' does not appear to be a valid model name.";
+            } else if (error.message.includes("403")) {
+                errorMessage = "⚠️ Access Denied: API Key might be invalid for this model.";
+            } else if (error.message.includes("400")) {
+                errorMessage = "⚠️ Bad Request: Google rejected the request format.";
             }
 
             setMessages(prev => [...prev, { role: 'model', text: errorMessage }]);
@@ -225,4 +241,6 @@ export default function Chatbot() {
             </AnimatePresence>
         </>
     );
-}
+});
+
+export default Chatbot;
