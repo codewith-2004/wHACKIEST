@@ -63,11 +63,7 @@ export default function App() {
           <Route path="/" element={<ExplorerMode />} />
           {/* 2. USE THE FOGMAP COMPONENT HERE */}
           {/* We wrap it in h-screen to make sure the map takes the full height */}
-          <Route path="/wanderer" element={
-            <div className="h-screen w-full absolute inset-0 z-0">
-               <FogMap quests={sites} />
-            </div>
-          } />
+          <Route path="/wanderer" element={<FogMap quests={sites} />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>

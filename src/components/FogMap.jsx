@@ -1,40 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-// Import marker icon (or use default)
-import { MapPin } from 'lucide-react';
 
 const FogMap = ({ quests }) => {
   const mapContainer = useRef(null);
   const mapInstance = useRef(null);
   const canvasRef = useRef(null);
   
-  // Start user at Hampi (Virupaksha Temple area)
-  // [Lng, Lat] format for MapLibre
+  // 📍 CENTER ON HAMPI (Matches your new sites.json)
   const START_LOCATION = [76.4600, 15.3350]; 
 
   const [visitedPath, setVisitedPath] = useState([START_LOCATION]);
   const [visibleQuests, setVisibleQuests] = useState([]);
 
-// 1. Initialize Map
   useEffect(() => {
-    // If a map already exists, don't create another one
+    // 1. Prevent double-mounting in Strict Mode
     if (mapInstance.current) return;
 
-    // Create the map instance
+    // 2. Initialize Map
     const map = new maplibregl.Map({
       container: mapContainer.current,
-      // USE OSM RASTER TILES (Reliable & Free)
       style: {
         version: 8,
         sources: {
           'osm': {
             type: 'raster',
-            tiles: [
-              'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
-            ],
+            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
             tileSize: 256,
             attribution: '&copy; OpenStreetMap Contributors',
           }
@@ -49,62 +40,75 @@ const FogMap = ({ quests }) => {
       },
       center: START_LOCATION,
       zoom: 14,
+      attributionControl: false // Cleaner UI
     });
 
-    // Save to ref
     mapInstance.current = map;
 
+    // 3. On Load: Add User Marker & Start Fog
     map.on('load', () => {
-      drawFog();
-      
-      // Add a marker for the "User" (You)
-      new maplibregl.Marker({ color: '#FF6D1F' })
+      // User Marker (Orange Dot)
+      const el = document.createElement('div');
+      el.className = 'w-4 h-4 bg-orange-500 rounded-full border-2 border-white shadow-lg animate-pulse';
+      new maplibregl.Marker({ element: el })
         .setLngLat(START_LOCATION)
-        .addTo(map); // Use 'map' local var, not ref, for safety here
+        .addTo(map);
+
+      // Initial Fog Draw
+      drawFog();
     });
 
+    // 4. Bind Events for Redrawing Fog
     map.on('move', drawFog);
     map.on('zoom', drawFog);
     map.on('resize', () => {
-        resizeCanvas();
-        drawFog();
+      resizeCanvas();
+      drawFog();
     });
     
+    // Initial Sizing
     resizeCanvas();
 
-    // CLEANUP FUNCTION
+    // 5. CLEANUP (Crucial for avoiding white screen on reload)
     return () => {
-        map.remove(); // Destroy the map
-        mapInstance.current = null; // CRITICAL: Reset ref to null!
+      map.remove();
+      mapInstance.current = null;
     };
   }, []);
 
-  // 2. Track User & Update Path
+  // --- GAME LOOP: Simulate Walking ---
   useEffect(() => {
     const interval = setInterval(() => {
-        // Simulate walking around Hampi
-        const newLat = START_LOCATION[1] + (Math.random() - 0.5) * 0.01;
-        const newLng = START_LOCATION[0] + (Math.random() - 0.5) * 0.01;
-        
+        if (!mapInstance.current) return;
+
+        // Walk slightly in a random direction
+        const lastLoc = visitedPath[visitedPath.length - 1];
+        const newLat = lastLoc[1] + (Math.random() - 0.5) * 0.002; // Small steps
+        const newLng = lastLoc[0] + (Math.random() - 0.5) * 0.002;
         const newPoint = [newLng, newLat];
 
         setVisitedPath(prev => [...prev, newPoint]);
         checkQuestProximity(newPoint);
+        
+        // Update user marker position if you want (Optional)
+        // ...
+
         drawFog();
-    }, 2000); // Update every 2 seconds
+    }, 1000); 
 
     return () => clearInterval(interval);
-  }, [quests]); 
+  }, [visitedPath]); // Re-run when path changes to keep loop alive properly
 
+  // --- HELPER: Resize Canvas ---
   const resizeCanvas = () => {
     const canvas = canvasRef.current;
-    const container = mapContainer.current;
-    if (canvas && container) {
-        canvas.width = container.offsetWidth;
-        canvas.height = container.offsetHeight;
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
   };
 
+  // --- HELPER: Draw The Fog Layer ---
   const drawFog = () => {
     const map = mapInstance.current;
     const canvas = canvasRef.current;
@@ -114,21 +118,22 @@ const FogMap = ({ quests }) => {
     const width = canvas.width;
     const height = canvas.height;
 
-    // A. Reset & Fill Fog
+    // A. Fill screen with Dark Fog
+    ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = 'rgba(34, 34, 34, 0.95)'; // Dark Grey Fog
+    ctx.fillStyle = 'rgba(20, 20, 20, 0.9)'; // 90% opacity dark grey
     ctx.fillRect(0, 0, width, height);
 
-    // B. Punch Holes (Eraser Mode)
+    // B. Erase "Holes" where user has been
     ctx.globalCompositeOperation = 'destination-out';
 
     visitedPath.forEach(coord => {
         const screenPoint = map.project(coord);
         
-        // Larger radius for better visibility
-        const radius = 80; 
+        // Draw soft circle
+        const radius = 100; 
         const gradient = ctx.createRadialGradient(
-            screenPoint.x, screenPoint.y, 15,
+            screenPoint.x, screenPoint.y, 20,
             screenPoint.x, screenPoint.y, radius
         );
         gradient.addColorStop(0, 'rgba(0, 0, 0, 1)'); // Clear center
@@ -139,18 +144,15 @@ const FogMap = ({ quests }) => {
         ctx.arc(screenPoint.x, screenPoint.y, radius, 0, Math.PI * 2);
         ctx.fill();
     });
-
-    ctx.globalCompositeOperation = 'source-over';
   };
 
+  // --- HELPER: Check Quests ---
   const checkQuestProximity = (userLoc) => {
     if(!quests) return;
-    const detectionRange = 0.005; // ~500 meters
+    const detectionRange = 0.005; 
 
     const found = quests.filter(q => {
-        // Safe check for missing coordinates
         if (!q.lat || !q.lng) return false;
-
         const distLat = Math.abs(q.lat - userLoc[1]);
         const distLng = Math.abs(q.lng - userLoc[0]);
         return (distLat < detectionRange && distLng < detectionRange);
@@ -160,33 +162,45 @@ const FogMap = ({ quests }) => {
         const ids = new Set(prev.map(p => p.id));
         const newFinds = found.filter(f => !ids.has(f.id));
         
-        // If we found a NEW quest, add a marker to the map
-        newFinds.forEach(quest => {
-            const el = document.createElement('div');
-            el.className = 'w-8 h-8 bg-brand-accent rounded-full border-2 border-white flex items-center justify-center text-xl shadow-lg animate-bounce';
-            el.innerText = '📍';
-            
-            new maplibregl.Marker({ element: el })
-                .setLngLat([quest.lng, quest.lat])
-                .setPopup(new maplibregl.Popup().setHTML(`<b style="color:black">${quest.name}</b><br/><span style="color:black">+${quest.xp} XP</span>`))
-                .addTo(mapInstance.current);
-        });
-
+        if (newFinds.length > 0 && mapInstance.current) {
+             newFinds.forEach(q => {
+                new maplibregl.Marker({ color: '#10B981' }) // Green marker for found quest
+                    .setLngLat([q.lng, q.lat])
+                    .setPopup(new maplibregl.Popup().setText(`🎉 Found: ${q.name}!`))
+                    .addTo(mapInstance.current);
+             });
+        }
         return [...prev, ...newFinds];
     });
   };
 
   return (
-    <div className="relative w-full h-full">
-      <div ref={mapContainer} className="absolute inset-0 z-0 bg-gray-200" />
-      <canvas ref={canvasRef} className="absolute inset-0 z-10 pointer-events-none" />
+    <>
+      {/* CRITICAL FIX: 
+         position: fixed, inset: 0, z-index: 0 
+         This breaks the map out of the parent padding/containers 
+      */}
+      <div 
+        ref={mapContainer} 
+        className="fixed inset-0 w-full h-full z-0 bg-black" 
+      />
+      <canvas 
+        ref={canvasRef} 
+        className="fixed inset-0 w-full h-full z-10 pointer-events-none" 
+      />
       
-      <div className="absolute top-24 left-6 z-20 bg-white/90 backdrop-blur p-4 rounded-xl shadow-xl border border-white/50">
-         <h2 className="font-bold text-brand-dark text-lg">Quests Unlocked</h2>
-         <div className="text-3xl font-black text-brand-accent">{visibleQuests.length} / {quests?.length || 0}</div>
-         <p className="text-xs text-gray-500 mt-1">Walk around Hampi to reveal map!</p>
+      {/* UI Overlay */}
+      <div className="fixed top-28 left-6 z-20 bg-white/90 backdrop-blur p-4 rounded-xl shadow-2xl border border-white/50 w-64">
+         <h2 className="font-bold text-gray-800 text-lg">Quests Unlocked</h2>
+         <div className="flex items-end gap-2">
+            <span className="text-4xl font-black text-orange-500">{visibleQuests.length}</span>
+            <span className="text-gray-400 mb-1 font-bold">/ {quests?.length || 0}</span>
+         </div>
+         <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+            Walk to clear the fog. <br/> Hidden sites will appear on the map!
+         </p>
       </div>
-    </div>
+    </>
   );
 };
 
