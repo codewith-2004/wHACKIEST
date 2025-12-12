@@ -14,7 +14,7 @@ export default function SectionSlider({ title, items, isActivity = false }) {
                     <div
                         key={item.id}
                         // INCREASED HEIGHT: min-w is now 240px, and image height is h-40
-                        className="min-w-[240px] bg-brand-card rounded-2xl p-3 shadow-lg flex-shrink-0 snap-center border border-brand-dark/5 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between"
+                        className="min-w-[240px] bg-[#FAF3E1] rounded-2xl p-3 shadow-lg flex-shrink-0 snap-center border border-brand-dark/5 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between"
                     >
                         <div>
                             {/* Image Section (Taller now: h-40) */}
