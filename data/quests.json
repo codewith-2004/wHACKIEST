@@ -1,0 +1,119 @@
+[
+  {
+    "id": "first-steps",
+    "title": "First Steps",
+    "description": "Visit any 3 heritage sites",
+    "type": "discovery",
+    "rarity": "common",
+    "xp": 150,
+    "duration_days": null,
+    "badge": "Curious Explorer",
+    "requirements": {
+      "visit_count": 3
+    },
+    "stamps": {
+      "common": 1
+    }
+  },
+  {
+    "id": "temple-seeker",
+    "title": "Temple Seeker",
+    "description": "Visit all 5 main temples (Virupaksha, Krishna, Pattabhirama, Hemakuta, Achyutaraya)",
+    "type": "discovery",
+    "rarity": "common",
+    "xp": 500,
+    "duration_days": 2,
+    "badge": "Temple Master",
+    "requirements": {
+      "temples": ["Virupaksha", "Krishna", "Pattabhirama", "Hemakuta", "Achyutaraya"]
+    },
+    "stamps": {
+      "common": 3
+    }
+  },
+  {
+    "id": "hidden-gem",
+    "title": "Hidden Gem",
+    "description": "Visit 3 lesser-known sites (Matanga Hill, Underground Shiva Temple, Harihara Temple)",
+    "type": "discovery",
+    "rarity": "rare",
+    "xp": 400,
+    "duration_days": 3,
+    "badge": "Off-Path Explorer",
+    "requirements": {
+      "sites": ["Matanga Hill", "Underground Shiva Temple", "Harihara Temple"]
+    },
+    "stamps": {
+      "rare": 2
+    }
+  },
+  {
+    "id": "sunrise-ritual",
+    "title": "Sunrise Ritual",
+    "description": "Visit Hemakuta Temple at sunrise (6-7 AM) and take a photo",
+    "type": "photo",
+    "rarity": "rare",
+    "xp": 350,
+    "duration_days": 1,
+    "badge": "Early Riser",
+    "requirements": {
+      "site": "Hemakuta Temple",
+      "time_start": "06:00",
+      "time_end": "07:00",
+      "photo_required": true
+    },
+    "stamps": {
+      "rare": 1
+    }
+  },
+  {
+    "id": "sunset-chaser",
+    "title": "Sunset Chaser",
+    "description": "Visit 4 different sites and catch sunset at each",
+    "type": "discovery",
+    "rarity": "epic",
+    "xp": 800,
+    "duration_days": 5,
+    "badge": "Golden Hour Master",
+    "requirements": {
+      "visit_count": 4,
+      "sunset_required": true
+    },
+    "stamps": {
+      "epic": 1
+    }
+  },
+  {
+    "id": "archaeologist-route",
+    "title": "Archaeologist's Route",
+    "description": "Visit 8 specific sites in a specific order (creating a self-guided tour)",
+    "type": "discovery",
+    "rarity": "epic",
+    "xp": 1200,
+    "duration_days": 7,
+    "badge": "Archaeologist",
+    "requirements": {
+      "ordered_sites": ["site1", "site2", "site3", "site4", "site5", "site6", "site7", "site8"]
+    },
+    "stamps": {
+      "epic": 2
+    }
+  },
+  {
+    "id": "moonlight-wanderer",
+    "title": "Moonlight Wanderer",
+    "description": "Visit 5 sites and complete at least 1 site visit between 9 PM - 5 AM",
+    "type": "discovery",
+    "rarity": "mythic",
+    "xp": 2000,
+    "duration_days": null,
+    "badge": "Nocturnal Explorer",
+    "requirements": {
+      "visit_count": 5,
+      "night_visit": true
+    },
+    "stamps": {
+      "mythic": 1
+    }
+  }
+]

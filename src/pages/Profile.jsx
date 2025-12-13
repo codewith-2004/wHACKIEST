@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGamification } from '../context/GamificationContext';
-import { Trophy, Medal, Map, Star, Award, Zap, Crown, Flame } from 'lucide-react';
+import { Trophy, Medal, Map, Star, Award, Zap, Crown, Flame, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Profile() {
-    const { xp, level, getLevelTitle, getLevelProgress, badges, completedQuests, stamps } = useGamification();
+    const { xp, level, getLevelTitle, getLevelProgress, badges, completedQuests, stamps, quests } = useGamification();
     const progress = getLevelProgress();
+
+    const [showQuestModal, setShowQuestModal] = useState(false);
 
     // Color themes for different sections to make them bold
     const themes = {
@@ -92,6 +94,7 @@ export default function Profile() {
                         value={completedQuests.length}
                         theme={themes.quests}
                         delay={0.2}
+                        onClick={() => setShowQuestModal(true)}
                     />
                     <StatBox
                         icon={<Medal size={28} className="text-white" />}
@@ -191,19 +194,80 @@ export default function Profile() {
                     </motion.div>
                 </div>
 
+                {/* Quest Modal */}
+                {showQuestModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+                        onClick={() => setShowQuestModal(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                            className="bg-white rounded-3xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="text-2xl font-black text-brand-dark flex items-center gap-3">
+                                    <div className="p-2 bg-rose-500 rounded-lg text-white border-2 border-brand-dark shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                        <Trophy size={20} />
+                                    </div>
+                                    Completed Quests ({completedQuests.length})
+                                </h2>
+                                <button
+                                    onClick={() => setShowQuestModal(false)}
+                                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            {completedQuests.length > 0 ? (
+                                <div className="space-y-3">
+                                    {completedQuests.map((questId) => {
+                                        const quest = quests.find(q => q.id === questId);
+                                        return quest ? (
+                                            <div key={questId} className="bg-rose-50 rounded-xl p-4 border-2 border-rose-200">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 bg-rose-500 rounded-lg flex items-center justify-center text-white">
+                                                        <Trophy size={16} />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="font-bold text-brand-dark">{quest.title}</h3>
+                                                        <p className="text-sm text-gray-600">{quest.description}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : null;
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="text-center py-8">
+                                    <Trophy size={48} className="mx-auto text-gray-300 mb-4" />
+                                    <p className="text-gray-500">No quests completed yet.</p>
+                                </div>
+                            )}
+                        </motion.div>
+                    </motion.div>
+                )}
+
             </div>
         </div>
     );
 }
 
 // Reusable colorful stat box
-const StatBox = ({ icon, label, value, theme, delay }) => (
+const StatBox = ({ icon, label, value, theme, delay, onClick }) => (
     <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay, type: "spring", stiffness: 200 }}
         whileHover={{ y: -5 }}
-        className={`${theme.bg} p-5 rounded-2xl border-b-4 ${theme.border} flex flex-col items-start justify-between h-32 relative overflow-hidden`}
+        className={`${theme.bg} p-5 rounded-2xl border-b-4 ${theme.border} flex flex-col items-start justify-between h-32 relative overflow-hidden ${onClick ? 'cursor-pointer' : ''}`}
+        onClick={onClick}
     >
         <div className={`absolute -right-4 -top-4 w-20 h-20 rounded-full ${theme.icon} opacity-20`} />
 
