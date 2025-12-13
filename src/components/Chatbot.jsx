@@ -53,8 +53,8 @@ const Chatbot = React.forwardRef((props, ref) => {
         try {
             if (!API_KEY) throw new Error("MISSING_KEY");
 
+            // NOTE: Using "gemini-2.5-flash" as requested by user.
             console.log("Talking to Gemini using model: gemini-2.5-flash");
-            console.log("API Key Status:", API_KEY ? "Present" : "Missing", API_KEY ? `(${API_KEY.substring(0, 5)}...)` : "");
 
             const genAI = new GoogleGenerativeAI(API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
@@ -76,21 +76,18 @@ const Chatbot = React.forwardRef((props, ref) => {
 
             setMessages(prev => [...prev, { role: 'model', text: text }]);
         } catch (error) {
-            console.error("Gemini Deep Debug Error:", error);
-            console.error("Error Name:", error.name);
-            console.error("Error Message:", error.message);
-            if (error.response) {
-                console.error("Error Response:", error.response);
-            }
+            console.error("Gemini Error:", error);
 
-            let errorMessage = "Connection failed. (Check Console for details)";
+            let errorMessage;
 
             if (error.message.includes("404")) {
-                errorMessage = "⚠️ Model Not Found: 'gemini-2.5-flash' does not appear to be a valid model name.";
+                errorMessage = `⚠️ Model Not Found: "gemini-2.5-flash" was not found on your API key's project. Verify you have access to this preview/new model.`;
             } else if (error.message.includes("403")) {
-                errorMessage = "⚠️ Access Denied: API Key might be invalid for this model.";
-            } else if (error.message.includes("400")) {
-                errorMessage = "⚠️ Bad Request: Google rejected the request format.";
+                errorMessage = `⚠️ Access Denied: API Key does not have permission for "gemini-2.5-flash".`;
+            } else if (error.message.includes("MISSING_KEY")) {
+                errorMessage = "⚠️ Configuration Error: VITE_GEMINI_API_KEY is missing from .env file.";
+            } else {
+                errorMessage = `Connection failed: ${error.message}`;
             }
 
             setMessages(prev => [...prev, { role: 'model', text: errorMessage }]);
