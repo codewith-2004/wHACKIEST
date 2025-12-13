@@ -4,7 +4,7 @@ import { Trophy, Medal, Map, Star, Award, Zap, Crown, Flame } from 'lucide-react
 import { motion } from 'framer-motion';
 
 export default function Profile() {
-    const { xp, level, getLevelTitle, getLevelProgress, badges, completedQuests, stamps } = useGamification();
+    const { xp, level, getLevelTitle, getLevelProgress, badges, completedQuests, stamps, userProfile } = useGamification();
     const progress = getLevelProgress();
 
     // Color themes for different sections to make them bold
@@ -16,14 +16,14 @@ export default function Profile() {
     };
 
     return (
-        <div className="min-h-screen bg-[#FAF3E1] pt-28 pb-12 px-4 sm:px-6">
+        <div className="min-h-screen bg-[#FAF3E1] dark:bg-brand-dark-bg pt-28 pb-12 px-4 sm:px-6 transition-colors duration-300">
             <div className="max-w-4xl mx-auto space-y-8">
 
                 {/* --- HERO SECTION: PLAYER CARD --- */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-white rounded-[2rem] p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] border-4 border-brand-dark relative overflow-hidden"
+                    className="bg-white dark:bg-brand-dark-card dark:border-brand-dark-text/10 rounded-[2rem] p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] border-4 border-brand-dark relative overflow-hidden transition-colors duration-300"
                 >
                     {/* Decorative Background Pattern */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
@@ -35,7 +35,7 @@ export default function Profile() {
                                 whileHover={{ scale: 1.05, rotate: -2 }}
                                 className="w-36 h-36 rounded-3xl bg-brand-accent flex items-center justify-center text-6xl border-4 border-brand-dark shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden"
                             >
-                                <span className="group-hover:scale-110 transition-transform duration-300">🤠</span>
+                                <span className="group-hover:scale-110 transition-transform duration-300">{userProfile?.avatar || '🤠'}</span>
                             </motion.div>
                             <div className="absolute -bottom-4 -right-4 bg-yellow-400 text-brand-dark font-black text-xl px-4 py-2 rounded-xl border-4 border-brand-dark shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rotate-3">
                                 LVL {level}
@@ -45,7 +45,7 @@ export default function Profile() {
                         {/* Player Info */}
                         <div className="flex-1 w-full text-center md:text-left space-y-3">
                             <div>
-                                <h1 className="text-4xl font-black text-brand-dark tracking-tight">Explorer Aayush</h1>
+                                <h1 className="text-4xl font-black text-brand-dark dark:text-brand-dark-text tracking-tight transition-colors">{userProfile?.username || 'Explorer'}</h1>
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-100 text-purple-700 rounded-lg border-2 border-purple-200 mt-2 font-bold text-sm uppercase tracking-wide">
                                     <Crown size={16} />
                                     {getLevelTitle()}
@@ -115,9 +115,9 @@ export default function Profile() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5 }}
-                        className="bg-white rounded-3xl p-6 border-4 border-gray-200 shadow-xl"
+                        className="bg-white dark:bg-brand-dark-card dark:border-brand-dark-text/10 rounded-3xl p-6 border-4 border-gray-200 shadow-xl transition-colors duration-300"
                     >
-                        <h2 className="text-2xl font-black text-brand-dark mb-6 flex items-center gap-3">
+                        <h2 className="text-2xl font-black text-brand-dark dark:text-brand-dark-text mb-6 flex items-center gap-3 transition-colors">
                             <div className="p-2 bg-purple-500 rounded-lg text-white border-2 border-brand-dark shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                                 <Star size={20} />
                             </div>
@@ -140,7 +140,7 @@ export default function Profile() {
                                         {count > 0 ? '✨' : '🔒'}
                                     </div>
                                     <span className="font-bold uppercase text-[10px] tracking-widest text-gray-500">{type}</span>
-                                    <span className="text-2xl font-black text-brand-dark">{count}</span>
+                                    <span className="text-2xl font-black text-brand-dark dark:text-brand-dark-text">{count}</span>
                                 </div>
                             ))}
                         </div>
@@ -151,9 +151,9 @@ export default function Profile() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.6 }}
-                        className="bg-white rounded-3xl p-6 border-4 border-gray-200 shadow-xl"
+                        className="bg-white dark:bg-brand-dark-card dark:border-brand-dark-text/10 rounded-3xl p-6 border-4 border-gray-200 shadow-xl transition-colors duration-300"
                     >
-                        <h2 className="text-2xl font-black text-brand-dark mb-6 flex items-center gap-3">
+                        <h2 className="text-2xl font-black text-brand-dark dark:text-brand-dark-text mb-6 flex items-center gap-3 transition-colors">
                             <div className="p-2 bg-brand-accent rounded-lg text-white border-2 border-brand-dark shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                                 <Award size={20} />
                             </div>
@@ -171,7 +171,7 @@ export default function Profile() {
                                         <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center border-2 border-orange-200 shadow-sm mb-2 text-2xl group-hover:scale-110 transition-transform">
                                             🎖️
                                         </div>
-                                        <span className="font-bold text-xs text-brand-dark leading-tight line-clamp-2">{badge}</span>
+                                        <span className="font-bold text-xs text-brand-dark dark:text-brand-dark-text leading-tight line-clamp-2 transition-colors">{badge}</span>
                                     </motion.div>
                                 ))}
                                 {/* Empty slots fillers for visual balance */}

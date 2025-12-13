@@ -58,7 +58,7 @@ export default function QuestCard({ quest, isCompleted, onClaim }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.02 }}
-            className={`relative w-80 min-h-[30rem] h-full flex flex-col justify-between rounded-3xl p-6 border-2 shadow-xl cursor-pointer overflow-hidden backdrop-blur-sm transition-colors duration-300 ${isCompleted ? 'grayscale bg-gray-100 border-gray-300 dark:bg-gray-800 dark:border-gray-700' : (rarityColors[quest.rarity] || rarityColors.common)}`}
+            className={`relative w-80 min-h-[30rem] h-full flex flex-col justify-between rounded-3xl p-6 border-2 shadow-xl cursor-pointer overflow-hidden backdrop-blur-sm transition-colors duration-300 ${isCompleted ? 'grayscale bg-gray-100 border-gray-300 text-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400' : (rarityColors[quest.rarity] || rarityColors.common)}`}
         >
             {/* Background Decorative Layer */}
             <div

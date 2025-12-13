@@ -14,8 +14,8 @@ export default {
           accent: '#FF6D1F',   // Orange (Buttons/Highlights)
           dark: '#222222',     // Black (Text)
           // Dark Mode Palette
-          'dark-bg': '#1a1a1a',
-          'dark-card': '#2d2d2d',
+          'dark-bg': '#211832', // Deep Purple-Black
+          'dark-card': '#2a1f3d', // Slightly lighter version for cards
           'dark-text': '#e5e5e5',
         }
       },

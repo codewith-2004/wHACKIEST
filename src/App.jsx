@@ -5,6 +5,7 @@ import FogMap from './components/FogMap';
 import Header from './components/Header';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
+import Onboarding from './pages/Onboarding';
 import AdminLayout from './pages/Admin/AdminLayout';
 import QuestManager from './pages/Admin/QuestManager';
 import SiteManager from './pages/Admin/SiteManager';
@@ -41,6 +42,7 @@ export default function App() {
 
               {/* Protected Routes (Wrapped in MainLayout) */}
               <Route element={<ProtectedRoute />}>
+                <Route path="/onboarding" element={<Onboarding />} />
                 <Route element={<MainLayout />}>
                   <Route path="/" element={<ExplorerMode />} />
                   <Route path="/wanderer" element={<FogMap />} />

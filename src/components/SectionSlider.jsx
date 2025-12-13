@@ -22,7 +22,7 @@ export default function SectionSlider({ title, items, isActivity = false, onItem
                             <Icon size={20} />
                         </div>
                     )}
-                    <h3 className="text-brand-dark text-xl font-black tracking-tight">{title}</h3>
+                    <h3 className="text-brand-dark dark:text-brand-dark-text text-xl font-black tracking-tight transition-colors">{title}</h3>
                 </div>
                 <span className={`text-xs font-bold uppercase cursor-pointer hover:underline ${currentTheme.text}`}>View All</span>
             </div>
@@ -32,7 +32,7 @@ export default function SectionSlider({ title, items, isActivity = false, onItem
                     <div
                         key={item.id}
                         // INCREASED HEIGHT: min-w is now 240px, and image height is h-40
-                        className="min-w-[240px] bg-[#FAF3E1] rounded-2xl p-3 shadow-lg flex-shrink-0 snap-center border border-brand-dark/5 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between"
+                        className="min-w-[240px] bg-[#FAF3E1] dark:bg-brand-dark-card rounded-2xl p-3 shadow-lg flex-shrink-0 snap-center border border-brand-dark/5 dark:border-brand-dark-text/10 hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between"
                     >
                         <div>
                             {/* Image Section (Taller now: h-40) */}
@@ -50,8 +50,8 @@ export default function SectionSlider({ title, items, isActivity = false, onItem
                             </div>
 
                             {/* Card Details */}
-                            <h4 className="font-bold text-brand-dark text-lg leading-tight font-serif">{item.name}</h4>
-                            <p className="text-xs text-brand-dark/60 mt-1 line-clamp-2">{item.description}</p>
+                            <h4 className="font-bold text-brand-dark dark:text-brand-dark-text text-lg leading-tight font-serif transition-colors">{item.name}</h4>
+                            <p className="text-xs text-brand-dark/60 dark:text-brand-dark-text/60 mt-1 line-clamp-2 transition-colors">{item.description}</p>
                         </div>
 
                         {/* Action Button */}
