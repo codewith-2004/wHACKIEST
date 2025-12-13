@@ -19,6 +19,15 @@ export function GamificationProvider({ children }) {
             if (supabase.supabaseUrl) {
                 const { data, error } = await supabase.from('quests').select('*');
                 if (!error && data) setAllQuests(data);
+            } else {
+                // Load from local JSON for development
+                try {
+                    const response = await fetch('/data/quests.json');
+                    const data = await response.json();
+                    setAllQuests(data);
+                } catch (error) {
+                    console.error('Error loading quests:', error);
+                }
             }
         };
         fetchQuests();
