@@ -35,7 +35,7 @@ export default function ExplorerMode() {
     ...site,
     distance: calculateSiteDistance(site)
   }));
-  
+
   const activities = sites.filter(site => site.category === 'activity').map(site => ({
     ...site,
     distance: calculateSiteDistance(site)
@@ -54,8 +54,8 @@ export default function ExplorerMode() {
   const handleNavigate = (place) => {
     setSelectedPlace(null);
     // Navigate to /wanderer (Map page) and pass the place data
-    navigate('/wanderer', { 
-      state: { targetPlace: place } 
+    navigate('/wanderer', {
+      state: { targetPlace: place }
     });
   };
 
@@ -63,12 +63,12 @@ export default function ExplorerMode() {
     setSelectedPlace(null);
     // Open chatbot with specific prompt
     setTimeout(() => {
-        chatbotRef.current?.openWithQuery(`Plan a detailed itinerary for visiting ${place.name} in Hampi.`);
+      chatbotRef.current?.openWithQuery(`Plan a detailed itinerary for visiting ${place.name} in Hampi.`);
     }, 300);
   };
 
   return (
-    <div className="pb-24 bg-white">
+    <div className="pb-24 bg-white dark:bg-brand-dark-bg transition-colors duration-300">
       <style>{`::-webkit-scrollbar { display: none; }`}</style>
 
       {/* Pass onItemClick to open the modal */}
@@ -81,7 +81,7 @@ export default function ExplorerMode() {
         items={places}
         icon={Compass}
         theme="blue"
-        onItemClick={setSelectedPlace} 
+        onItemClick={setSelectedPlace}
       />
 
       {/* ... Quest Section (Unchanged) ... */}
@@ -91,7 +91,7 @@ export default function ExplorerMode() {
             <div className="p-2 rounded-lg bg-orange-100 text-orange-600">
               <Map size={20} />
             </div>
-            <h2 className="text-brand-dark text-xl font-black tracking-tight">Available Quests</h2>
+            <h2 className="text-brand-dark dark:text-brand-dark-text text-xl font-black tracking-tight transition-colors">Available Quests</h2>
           </div>
         </div>
 
@@ -122,7 +122,7 @@ export default function ExplorerMode() {
       {/* Render Modal */}
       <AnimatePresence>
         {selectedPlace && (
-          <PlaceDetailModal 
+          <PlaceDetailModal
             place={selectedPlace}
             onClose={() => setSelectedPlace(null)}
             onNavigate={handleNavigate}

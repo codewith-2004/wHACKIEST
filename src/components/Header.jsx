@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, LogOut } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
     const location = useLocation();
@@ -9,8 +10,8 @@ export default function Header() {
 
     const navItemClass = (path) =>
         `px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${isActive(path)
-            ? 'bg-brand-dark text-brand-bg shadow-lg scale-105'
-            : 'text-brand-dark hover:bg-brand-dark/10'
+            ? 'bg-brand-dark text-brand-bg shadow-lg scale-105 dark:bg-brand-bg dark:text-brand-dark'
+            : 'text-brand-dark hover:bg-brand-dark/10 dark:text-brand-bg dark:hover:bg-brand-bg/10'
         }`;
 
     return (
@@ -20,12 +21,13 @@ export default function Header() {
            - pointer-events-auto ensures the pill itself is clickable
            - backdrop-blur and semi-transparent white matches the reference
        */}
-            <nav className="pointer-events-auto flex items-center bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl rounded-full p-1.5 gap-1">
+            <nav className="pointer-events-auto flex items-center bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl rounded-full p-1.5 gap-1 dark:bg-brand-dark/80 dark:border-white/10">
                 <Link to="/" className={navItemClass('/')}>Explore</Link>
                 {/* Wanderer Button (Center of Pill) */}
                 <Link to="/wanderer" className={navItemClass('/wanderer')}>Wanderer</Link>
                 <Link to="/profile" className={navItemClass('/profile')}>Profile</Link>
-                <div className="w-px h-4 bg-gray-300 mx-1"></div>
+                <div className="w-px h-4 bg-gray-300 mx-1 dark:bg-gray-600"></div>
+                <ThemeToggle />
                 <button
                     onClick={() => {
                         localStorage.removeItem('isAuthenticated');

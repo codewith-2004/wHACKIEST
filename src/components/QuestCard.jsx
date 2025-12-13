@@ -94,10 +94,10 @@ export default function QuestCard({ quest, isCompleted, onClaim, userLocation })
     };
 
     const rarityColors = {
-        common: 'bg-emerald-50 border-emerald-200 text-emerald-900',
-        rare: 'bg-blue-50 border-blue-200 text-blue-900',
-        epic: 'bg-purple-50 border-purple-200 text-purple-900',
-        mythic: 'bg-amber-50 border-amber-200 text-amber-900',
+        common: 'bg-emerald-50 border-emerald-200 text-emerald-900 dark:bg-emerald-900/20 dark:border-emerald-700/50 dark:text-emerald-100',
+        rare: 'bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-900/20 dark:border-blue-700/50 dark:text-blue-100',
+        epic: 'bg-purple-50 border-purple-200 text-purple-900 dark:bg-purple-900/20 dark:border-purple-700/50 dark:text-purple-100',
+        mythic: 'bg-amber-50 border-amber-200 text-amber-900 dark:bg-amber-900/20 dark:border-amber-700/50 dark:text-amber-100',
     };
 
     const rarityAccents = {
@@ -119,7 +119,7 @@ export default function QuestCard({ quest, isCompleted, onClaim, userLocation })
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.02 }}
-            className={`relative w-80 min-h-[30rem] h-full flex flex-col justify-between rounded-3xl p-6 border-2 shadow-xl cursor-pointer overflow-hidden backdrop-blur-sm ${isCompleted ? 'grayscale bg-gray-100 border-gray-300' : (rarityColors[quest.rarity] || rarityColors.common)}`}
+            className={`relative w-80 min-h-[30rem] h-full flex flex-col justify-between rounded-3xl p-6 border-2 shadow-xl cursor-pointer overflow-hidden backdrop-blur-sm transition-colors duration-300 ${isCompleted ? 'grayscale bg-gray-100 border-gray-300 text-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400' : (rarityColors[quest.rarity] || rarityColors.common)}`}
         >
             {/* Background Decorative Layer */}
             <div
@@ -132,7 +132,7 @@ export default function QuestCard({ quest, isCompleted, onClaim, userLocation })
 
                 {/* Header */}
                 <div className="flex justify-between items-start mb-4">
-                    <div className="bg-white/60 backdrop-blur rounded-lg px-3 py-1 text-xs font-bold uppercase tracking-wider border border-white/40 shadow-sm">
+                    <div className="bg-white/60 dark:bg-black/40 backdrop-blur rounded-lg px-3 py-1 text-xs font-bold uppercase tracking-wider border border-white/40 dark:border-white/10 shadow-sm">
                         {quest.rarity}
                     </div>
                     {isCompleted && (
@@ -148,7 +148,7 @@ export default function QuestCard({ quest, isCompleted, onClaim, userLocation })
 
                 {/* Title & Icon */}
                 <div className="mb-6">
-                    <div className="w-16 h-16 rounded-2xl bg-white/50 backdrop-blur flex items-center justify-center mb-4 shadow-inner border border-white/40">
+                    <div className="w-16 h-16 rounded-2xl bg-white/50 dark:bg-white/10 backdrop-blur flex items-center justify-center mb-4 shadow-inner border border-white/40 dark:border-white/10">
                         {quest.type === 'photo' ? <Star size={32} strokeWidth={1.5} /> : <Trophy size={32} strokeWidth={1.5} />}
                     </div>
                     <h3 className="text-2xl font-black leading-tight mb-2 drop-shadow-sm">{quest.title}</h3>
@@ -173,7 +173,7 @@ export default function QuestCard({ quest, isCompleted, onClaim, userLocation })
                         <div className="flex gap-2 mt-2">
                             {Object.entries(quest.stamps).map(([type, count]) => (
                                 count > 0 && (
-                                    <div key={type} className="flex items-center gap-1 bg-white/40 px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide">
+                                    <div key={type} className="flex items-center gap-1 bg-white/40 dark:bg-black/20 px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide">
                                         <div className={`w-2 h-2 rounded-full ${type === 'common' ? 'bg-emerald-400' : type === 'rare' ? 'bg-blue-400' : type === 'epic' ? 'bg-purple-400' : 'bg-amber-400'}`} />
                                         <span>{count} {type} Stamp{count > 1 ? 's' : ''}</span>
                                     </div>

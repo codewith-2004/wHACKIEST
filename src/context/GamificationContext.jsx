@@ -12,6 +12,9 @@ export function GamificationProvider({ children }) {
     // Stamps: { common: 0, rare: 0, epic: 0, mythic: 0 }
     const [stamps, setStamps] = useState(() => JSON.parse(localStorage.getItem('hampi_stamps')) || { common: 0, rare: 0, epic: 0, mythic: 0 });
 
+    // User Profile
+    const [userProfile, setUserProfile] = useState(() => JSON.parse(localStorage.getItem('hampi_user_profile')) || null);
+
     const [allQuests, setAllQuests] = useState([]);
 
     useEffect(() => {
@@ -89,6 +92,12 @@ export function GamificationProvider({ children }) {
         return { xp: awardedXp, badge: quest.badge, stamps: quest.stamps };
     };
 
+    const updateProfile = (profileData) => {
+        const newProfile = { ...userProfile, ...profileData };
+        setUserProfile(newProfile);
+        localStorage.setItem('hampi_user_profile', JSON.stringify(newProfile));
+    };
+
     const generateNewQuest = async (currentCompleted) => {
         console.warn("AI Generation disabled temporarily.");
         // Stubbed for stability
@@ -148,6 +157,8 @@ export function GamificationProvider({ children }) {
         completedQuests,
         badges,
         stamps,
+        userProfile,
+        updateProfile,
         quests: allQuests,
         addXp,
         completeQuest,

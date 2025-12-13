@@ -14,7 +14,7 @@ export default function Auth() {
         // Dispatch a custom event or context update if needed, 
         // but for now simple localstorage + navigate
         window.dispatchEvent(new Event('storage'));
-        navigate('/');
+        navigate('/onboarding');
     };
 
     return (
